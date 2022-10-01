@@ -1,0 +1,12 @@
+_target_: src.models.cifar_module.CIFARLitModule
+
+optimizer:
+  _target_: torch.optim.Adam
+  _partial_: true
+  lr: 0.001
+  weight_decay: 0.0
+
+net:
+  _target_: src.models.components.timm_net.TimmNet
+  model_name: 'densenet121'
+  output_size: 10

@@ -1,0 +1,5 @@
+To change the OAuth token. For instance, to access remote dvc folder from a different account:
+
+1. Delete the cache from %CSIDL_LOCAL_APPDATA% (C:\Users\username\AppData\Local\pydrive2fs\Cache)
+2. dvc push -r gdrive
+ 
