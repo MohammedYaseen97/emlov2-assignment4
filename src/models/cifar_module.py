@@ -5,6 +5,9 @@ from pytorch_lightning import LightningModule
 from torchmetrics import MaxMetric, MeanMetric
 from torchmetrics.classification.accuracy import Accuracy
 
+from pl_bolts.transforms.dataset_normalizations import cifar10_normalization
+import torch.nn.functional as F
+
 class CIFARLitModule(LightningModule):
     """Example of LightningModule for CIFAR10 classification.
 
@@ -46,11 +49,26 @@ class CIFARLitModule(LightningModule):
         self.val_loss = MeanMetric()
         self.test_loss = MeanMetric()
 
-        # for tracking best so far validation accuracy
+        # for logging best so far validation accuracy
         self.val_acc_best = MaxMetric()
+
+        self.predict_transform = cifar10_normalization()
 
     def forward(self, x: torch.Tensor):
         return self.net(x)
+
+    @torch.jit.export
+    def forward_jit(self, x: torch.Tensor):
+        with torch.no_grad():
+            # transform the inputs
+            x = self.predict_transform(x)
+
+            # forward pass
+            logits = self(x)
+
+            preds = F.softmax(logits, dim=-1)
+
+        return preds
 
     def on_train_start(self):
         # by default lightning executes validation step sanity checks before training starts,

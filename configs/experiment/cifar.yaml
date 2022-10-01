@@ -7,7 +7,7 @@ defaults:
   - override /datamodule: cifar.yaml
   - override /model: cifar.yaml
   - override /callbacks: default.yaml
-  - override /trainer: gpu.yaml
+  - override /trainer: default.yaml
   - override /logger: tensorboard.yaml
 
 # all parameters below will be merged with parameters from default configurations set above
