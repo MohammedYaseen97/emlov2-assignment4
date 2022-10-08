@@ -55,10 +55,10 @@ def demo(cfg: DictConfig) -> Tuple[dict, dict]:
         fn=recognize_cifar,
         inputs=[im],
         outputs=[gr.Label(num_top_classes=10)],
-        live=True,
+        live=True
     )
 
-    demo.launch(share=True)
+    demo.launch(server_name="0.0.0.0", server_port=8080)
 
 @hydra.main(
     version_base="1.2", config_path=root / "configs", config_name="demo_scripted.yaml"

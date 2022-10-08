@@ -1,6 +1,6 @@
 <div align="center">
 
-# EMLO 2.0 Assignment 3
+# EMLO 2.0 Assignment 4
 
 <a href="https://pytorch.org/get-started/locally/"><img alt="PyTorch" src="https://img.shields.io/badge/PyTorch-ee4c2c?logo=pytorch&logoColor=white"></a>
 <a href="https://pytorchlightning.ai/"><img alt="Lightning" src="https://img.shields.io/badge/-Lightning-792ee5?logo=pytorchlightning&logoColor=white"></a>
@@ -13,7 +13,7 @@
 
 ## Description
 
-In this assignment, we add DVC support to the repo, and conduct hyperparameter sweep using optuna.
+In this assignment, we deploy using gradio and optimise runs using torchscript.
 
 ## How to run
 
@@ -21,8 +21,8 @@ Install dependencies
 
 ```bash
 # clone project
-git clone https://github.com/MohammedYaseen97/emlo-2.0-assignment-2
-cd emlo-2.0-assignment-2
+git clone https://github.com/MohammedYaseen97/emlo-2.0-assignment-4
+cd emlo-2.0-assignment-4
 
 # [OPTIONAL] create conda environment
 conda create -n myenv python=3.8
@@ -75,20 +75,14 @@ make build
 
 This build also exists on [dockerhub](hub.docker.com)
 
-To run the container in interactive mode, use:
+To run the container, use:
 
 ```bash
-docker run -it --volume `pwd`:/app ace47/emlo-2.0:session02 ubuntu bash
-```
+docker run -p 8080:8080 -t ace47/emlo-2.0:session04
+``` 
 
-You can also just run the train and eval scripts:
-
-```bash
-docker run --volume `pwd`:/app ace47/emlo-2.0:session02 python src/train.py
-```
+To run the demo which uses torchscript, make and run the docker file as above. Alternatively, run it in your local using:
 
 ```bash
-docker run --volume `pwd`:/app ace47/emlo-2.0:session02 python src/eval.py ckpt_path=logs/train/runs/2022-09-12_15-47-43/checkpoints/epoch_001.ckpt
+python3 src/demo_scripted.py ckpt_path=logs/train/runs/2022-10-01_04-48-47/model.script.pt
 ```
-
-We mount the volume instead of copying all the files inside the docker while building so as to examine the system's performance inside docker with real time changes. 

@@ -14,7 +14,7 @@ RUN pip install -r requirements.txt && rm -rf /root/.cache/pip
 COPY . .
 
 # expose the port
-EXPOSE 7860
+EXPOSE 8080
 
 # run the scripted model
 ENTRYPOINT ["python3", "src/demo_scripted.py", "ckpt_path=logs/train/runs/2022-10-01_04-48-47/model.script.pt"]
